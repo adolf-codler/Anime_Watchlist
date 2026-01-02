@@ -1,0 +1,8 @@
+.view {
+  height: 50px;
+  background-color: gray;
+  width: 100vw;
+  z-index: 1000;
+  border: 1px black solid;
+  opacity: 40%;
+}

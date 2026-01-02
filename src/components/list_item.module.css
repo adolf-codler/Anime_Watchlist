@@ -1,0 +1,26 @@
+.item {
+  width: 160px;
+  margin: 20px;
+  height: 40px;
+  background-color: gray;
+  opacity: 85%;
+  border: black 1px solid;
+  transition:
+    width 0.3s ease,
+    height 0.3s ease,
+    opacity 0.3s ease;
+}
+.completed {
+  background-color: black;
+  opacity: 0.3;
+}
+.read {
+  border: 1px green solid;
+}
+.expand {
+  width: 240px;
+  height: 100px;
+}
+.inside {
+  flex-wrap: wrap;
+}
