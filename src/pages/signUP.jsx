@@ -1,50 +1,39 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
 import clsx from "clsx";
 import styles from "./signUP.module.css";
-import { auth } from "../firebase.js";
+import { useAuth } from "../context/useAuth";
 
 const SignUP = () => {
   const navi = useNavigate();
+  const { signUp, login } = useAuth();
+
+  const [email, setEmail] = useState("");
+  const [newUser, setNewUser] = useState(true);
+  const [check, setCheck] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
   const handleSignUp = async () => {
     if (check !== password) {
-      alert("passoword does not match");
+      alert("password does not match");
       return;
     }
     try {
-      const userCred = await createUserWithEmailAndPassword(
-        auth,
-        username,
-        password,
-      );
-      console.log("usercreated:", userCred.user);
+      await signUp(email, password);
       navi("/");
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      setError(err.message);
     }
   };
   const handleLogin = async () => {
     try {
-      const userCred = await signInWithEmailAndPassword(
-        auth,
-        username,
-        password,
-      );
-      console.log("Logged in:", userCred.user.email);
+      await login(email, password);
       navi("/");
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      setError(err.message);
     }
   };
-
-  const [newUser, setNewUser] = useState(true);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [check, setCheck] = useState("");
 
   return (
     <div className={clsx(styles.view)}>
@@ -52,8 +41,8 @@ const SignUP = () => {
         type="text"
         id="usr"
         className={clsx(styles.input)}
-        placeholder="username"
-        onChange={(input) => setUsername(input.target.value)}
+        placeholder="email"
+        onChange={(input) => setEmail(input.target.value)}
       />
       <input
         type="password"
@@ -82,6 +71,7 @@ const SignUP = () => {
       >
         {newUser ? "already have a account?" : "Create account"}
       </button>
+      {error && <div className={styles.error}>{error}</div>}
     </div>
   );
 };

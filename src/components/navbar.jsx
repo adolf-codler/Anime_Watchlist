@@ -1,16 +1,12 @@
 import clsx from "clsx";
-//import { db } from "../../firebase.js";
-//import { getdoc, updateDoc, collection } from "firebase/firestore";
 import styles from "./navbar.module.css";
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebase.js";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
 const Navbar = () => {
-  const navi = useNavigate();
-  const logOut = async () => {
+  const { logout, user } = useAuth();
+  if (!user) return null;
+  const handleLogOut = async () => {
     try {
-      await signOut(auth);
-      navi("/signup");
+      await logout();
       console.log("logged out");
     } catch (err) {
       console.error(err);
@@ -18,7 +14,8 @@ const Navbar = () => {
   };
   return (
     <div className={clsx(styles.view)}>
-      <button onClick={logOut}>LogOut</button>
+      <button onClick={handleLogOut}>LogOut</button>
+      <label>{user?.email}</label>
     </div>
   );
 };

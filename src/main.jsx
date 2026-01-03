@@ -1,17 +1,15 @@
 import React from "react";
-//import { authContext } from "./context/authcontext.jsx";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import SignUP from "./signUP.jsx";
+import { BrowserRouter as Router } from "react-router-dom";
+import { AuthProvider } from "./context/AuthProvider.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Router>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/signup" element={<SignUP />} />
-      </Routes>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </Router>
   </React.StrictMode>,
 );
